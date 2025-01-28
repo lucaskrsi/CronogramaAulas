@@ -1,0 +1,22 @@
+services:
+  
+  postgres:
+    image: bitnami/postgresql:latest
+    container_name: Postgres
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - cronograma_aulas_pg_data:/bitnami/postgresql
+    networks:
+      - cronograma_aulas-network
+
+volumes:
+  cronograma_aulas_pg_data:
+
+networks:
+  cronograma_aulas-network:
+    driver: bridge

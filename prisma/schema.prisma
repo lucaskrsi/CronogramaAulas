@@ -1,0 +1,130 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  binaryTargets   = ["native", "linux-musl-openssl-3.0.x"]
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Usuario {
+  id    String @id @default(uuid())
+  email String @unique
+  nome  String
+  senha String
+}
+
+model Professor {
+  id                       String                     @id @default(uuid())
+  cargaHoraria             Int                        @unique
+  DisponibilidadeProfessor DisponibilidadeProfessor[]
+  DisciplinaProfessor      DisciplinaProfessor[]
+}
+
+model Aula {
+  id                  String                @id @default(uuid())
+  inicioHora          DateTime
+  fimHora             DateTime
+  diaDaSemana         String
+  turmaId             String
+  turma               Turma                 @relation(fields: [turmaId], references: [id])
+  disciplinaId        String
+  disciplina          Disciplina            @relation(fields: [disciplinaId], references: [id])
+  AulaDisponibilidade AulaDisponibilidade[]
+
+  @@index([turmaId])
+  @@index([disciplinaId])
+}
+
+model DisponibilidadeProfessor {
+  id                  String                @id @default(uuid())
+  diaDaSemana         String
+  turno               String
+  professorId         String
+  professor           Professor             @relation(fields: [professorId], references: [id])
+  AulaDisponibilidade AulaDisponibilidade[]
+
+  @@index([professorId])
+}
+
+model AulaDisponibilidade {
+  id                         String                   @id @default(uuid())
+  aulaId                     String
+  disponibilidadeProfessorId String
+  disponibilidadeProfessor   DisponibilidadeProfessor @relation(fields: [disponibilidadeProfessorId], references: [id])
+  aula                       Aula                     @relation(fields: [aulaId], references: [id])
+
+  @@index([aulaId])
+  @@index([disponibilidadeProfessorId])
+}
+
+model Disciplina {
+  id                  String                @id @default(uuid())
+  nome                String
+  Aula                Aula[]
+  DisciplinaProfessor DisciplinaProfessor[]
+  DisciplinaGrade     DisciplinaGrade[]
+}
+
+model DisciplinaProfessor {
+  id           String     @id @default(uuid())
+  disciplinaId String
+  professorId  String
+  professor    Professor  @relation(fields: [professorId], references: [id])
+  disciplina   Disciplina @relation(fields: [disciplinaId], references: [id])
+
+  @@index([disciplinaId])
+  @@index([professorId])
+}
+
+model Turma {
+  id         String       @id @default(uuid())
+  nome       String
+  Aula       Aula[]
+  TurmaGrade TurmaGrade[]
+}
+
+model GradeCurricular {
+  id              String            @id @default(uuid())
+  nome            String
+  DisciplinaGrade DisciplinaGrade[]
+  TurmaGrade      TurmaGrade[]
+}
+
+model DisciplinaGrade {
+  id              String          @id @default(uuid())
+  disciplinaId    String
+  disciplina      Disciplina      @relation(fields: [disciplinaId], references: [id])
+  gradeId         String
+  gradeCurricular GradeCurricular @relation(fields: [gradeId], references: [id])
+  cargaHoraria    Int
+
+  @@index([gradeId])
+  @@index([disciplinaId])
+}
+
+model TurmaGrade {
+  id              String          @id @default(uuid())
+  ano             String
+  turmaId         String
+  gradeId         String
+  turma           Turma           @relation(fields: [turmaId], references: [id])
+  gradeCurricular GradeCurricular @relation(fields: [gradeId], references: [id])
+
+  @@index([turmaId])
+  @@index([gradeId])
+}
+
+enum Role {
+  STUDENT
+  PROFESSOR
+}
