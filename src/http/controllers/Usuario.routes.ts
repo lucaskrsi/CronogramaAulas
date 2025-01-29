@@ -13,5 +13,5 @@ export function usuarioRoutes(router: Router):void{
     router.get("/usuarios/:id", [ensureAuthenticated], get);
     router.delete("/usuarios/:id", [ensureAuthenticated], remove);
     router.put("/usuarios/:id", [ensureAuthenticated], update);
-    router.post("/usuarios", [ensureAuthenticated], create);
+    router.post("/usuarios", create);
 }
