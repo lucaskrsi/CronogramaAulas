@@ -66,9 +66,12 @@ export class AulaDisponibilidadeRepository implements IAulaDisponibilidadeReposi
             ),
             new DisponibilidadeProfessor(
                 aulaDisponibilidadePrisma.disponibilidadeProfessor.diaDaSemana,
-                aulaDisponibilidadePrisma.disponibilidadeProfessor.turno,
+                aulaDisponibilidadePrisma.disponibilidadeProfessor.inicioHora,
+                aulaDisponibilidadePrisma.disponibilidadeProfessor.fimHora,
                 new Professor(
                     aulaDisponibilidadePrisma.disponibilidadeProfessor.professor.cargaHoraria,
+                    aulaDisponibilidadePrisma.disponibilidadeProfessor.professor.nome,
+                    aulaDisponibilidadePrisma.disponibilidadeProfessor.professor.matricula,
                     aulaDisponibilidadePrisma.disponibilidadeProfessor.professor.id
                 ),
             ),
@@ -111,9 +114,12 @@ export class AulaDisponibilidadeRepository implements IAulaDisponibilidadeReposi
                 ),
                 new DisponibilidadeProfessor(
                     aulaDisponibilidade.disponibilidadeProfessor.diaDaSemana,
-                    aulaDisponibilidade.disponibilidadeProfessor.turno,
+                    aulaDisponibilidade.disponibilidadeProfessor.inicioHora,
+                    aulaDisponibilidade.disponibilidadeProfessor.fimHora,
                     new Professor(
                         aulaDisponibilidade.disponibilidadeProfessor.professor.cargaHoraria,
+                        aulaDisponibilidade.disponibilidadeProfessor.professor.nome,
+                        aulaDisponibilidade.disponibilidadeProfessor.professor.matricula,
                         aulaDisponibilidade.disponibilidadeProfessor.professor.id
                     ),
                 ),

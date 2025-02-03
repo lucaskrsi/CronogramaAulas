@@ -8,13 +8,15 @@ export async function create(req: Request, res: Response, next: NextFunction) {
     try {
         const createBody = z.object({
             cargaHoraria: z.coerce.number(),
+            nome: z.string().max(100),
+            matricula: z.coerce.number()
         });
 
-        const { cargaHoraria } = createBody.parse(req.body);
+        const { cargaHoraria, nome, matricula } = createBody.parse(req.body);
 
         const professorRepository = makeProfessorRepository();
 
-        const professor = await professorRepository.create(new Professor(cargaHoraria));
+        const professor = await professorRepository.create(new Professor(cargaHoraria, nome, matricula));
 
         res.status(201).json({
             data: { 

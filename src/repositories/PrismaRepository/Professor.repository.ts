@@ -11,6 +11,8 @@ export class ProfessorRepository implements IProfessorRepository {
             let professorPrisma = await prisma.professor.create({
                 data: {
                     cargaHoraria: professor.getCargaHoraria(),
+                    nome: professor.getNome(),
+                    matricula: professor.getMatricula(),
                 },
             })
 
@@ -31,6 +33,8 @@ export class ProfessorRepository implements IProfessorRepository {
 
         const professor = new Professor(
                 professorPrisma.cargaHoraria,
+                professorPrisma.nome,
+                professorPrisma.matricula,
                 professorPrisma.id
             );
 
@@ -42,6 +46,8 @@ export class ProfessorRepository implements IProfessorRepository {
             Professor.professorList = professorPrisma.map((professor) => {
                 return new Professor(
                     professor.cargaHoraria,
+                    professor.nome,
+                    professor.matricula,
                     professor.id
                 );
             });
@@ -49,7 +55,7 @@ export class ProfessorRepository implements IProfessorRepository {
             return Professor.professorList;
         }
 
-    async update(id: string, cargaHoraria ?: number): Promise < IProfessor > {
+    async update(id: string, cargaHoraria ?: number, nome?: string, matricula?: number): Promise < IProfessor > {
             let professorPrisma = await this.get(id);
 
             if(!professorPrisma) {
@@ -62,6 +68,8 @@ export class ProfessorRepository implements IProfessorRepository {
                 },
                 data: {
                     cargaHoraria: (typeof cargaHoraria == "number") ? cargaHoraria : professorPrisma.getCargaHoraria(),
+                    nome: (nome && typeof nome === "string")? nome : professorPrisma.getNome(),
+                    matricula: (typeof matricula === "number")? matricula : professorPrisma.getMatricula(),
                 }
             })
 

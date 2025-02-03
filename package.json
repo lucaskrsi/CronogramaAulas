@@ -30,9 +30,12 @@
     "uuid": "9.0.1",
     "zod": "3.22.4"
   },
+  "prisma": {
+    "seed": "node ./dist/database/seed.js"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "prisma migrate deploy && prisma generate && npm run build && node --env-file=.env ./dist/index.js && node ./dist/index.js",
+    "start": "prisma migrate deploy && prisma generate && npm run build && npx prisma db seed && node --env-file=.env ./dist/index.js && node ./dist/index.js",
     "start:dev": "npm run build && node --env-file=.env ./dist/index.js && node ./dist/index.js",
     "test": "jest"
   }

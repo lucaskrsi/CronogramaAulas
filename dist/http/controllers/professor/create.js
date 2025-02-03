@@ -19,10 +19,12 @@ function create(req, res, next) {
         try {
             const createBody = zod_1.z.object({
                 cargaHoraria: zod_1.z.coerce.number(),
+                nome: zod_1.z.string().max(100),
+                matricula: zod_1.z.coerce.number()
             });
-            const { cargaHoraria } = createBody.parse(req.body);
+            const { cargaHoraria, nome, matricula } = createBody.parse(req.body);
             const professorRepository = (0, makeProfessorRepository_1.makeProfessorRepository)();
-            const professor = yield professorRepository.create(new Professor_1.Professor(cargaHoraria));
+            const professor = yield professorRepository.create(new Professor_1.Professor(cargaHoraria, nome, matricula));
             res.status(201).json({
                 data: {
                     professorId: professor.getId(),

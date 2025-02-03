@@ -7,7 +7,8 @@ exports.app = exports.App = void 0;
 const express_1 = __importDefault(require("express"));
 const router_1 = require("./http/router");
 const errorHandler_1 = require("./http/middlewares/errorHandler");
-// import swaggerDocs from './swagger.json';
+const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
+const swagger_json_1 = __importDefault(require("./swagger.json"));
 const cors_1 = __importDefault(require("cors"));
 class App {
     constructor() {
@@ -21,7 +22,7 @@ class App {
         this.server.use((0, cors_1.default)(this.corsOptions));
         this.server.use(express_1.default.json());
         this.server.use(router_1.router);
-        // this.server.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+        this.server.use("/", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_json_1.default));
         this.server.use(errorHandler_1.errorHandler);
     }
 }

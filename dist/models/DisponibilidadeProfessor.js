@@ -2,10 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DisponibilidadeProfessor = void 0;
 class DisponibilidadeProfessor {
-    constructor(diaDaSemana, turno, professor, id) {
+    constructor(diaDaSemana, inicioHora, fimHora, professor, id) {
         this._id = id;
         this._diaDaSemana = diaDaSemana;
-        this._turno = turno;
+        this._inicioHora = inicioHora;
+        this._fimHora = fimHora;
         this._professor = professor;
     }
     getId() {
@@ -20,11 +21,17 @@ class DisponibilidadeProfessor {
     setDiaDaSemana(diaDaSemana) {
         this._diaDaSemana = diaDaSemana;
     }
-    getTurno() {
-        return this._turno;
+    getInicioHora() {
+        return this._inicioHora;
     }
-    setTurno(turno) {
-        this._turno = turno;
+    setInicioHora(inicioHora) {
+        this._inicioHora = inicioHora;
+    }
+    getFimHora() {
+        return this._fimHora;
+    }
+    setFimHora(fimHora) {
+        this._fimHora = fimHora;
     }
     getProfessor() {
         return this._professor;

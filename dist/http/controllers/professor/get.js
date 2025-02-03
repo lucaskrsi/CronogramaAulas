@@ -26,6 +26,8 @@ function get(req, res, next) {
                 data: {
                     id: professor.getId(),
                     cargaHoraria: professor.getCargaHoraria(),
+                    nome: professor.getNome(),
+                    matricula: professor.getMatricula(),
                 },
             });
         }

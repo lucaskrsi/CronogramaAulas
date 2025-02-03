@@ -2,7 +2,7 @@ import express from 'express';
 import { router } from './http/router';
 import { errorHandler } from './http/middlewares/errorHandler';
 import swaggerUi from 'swagger-ui-express';
-// import swaggerDocs from './swagger.json';
+import swaggerDocs from './swagger.json';
 import cors from 'cors';
 
 export class App {
@@ -20,7 +20,7 @@ export class App {
         this.server.use(cors(this.corsOptions))
         this.server.use(express.json());
         this.server.use(router);
-        // this.server.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+        this.server.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
         this.server.use(errorHandler);
     }
 }

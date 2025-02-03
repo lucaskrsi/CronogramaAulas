@@ -42,7 +42,7 @@ class DisciplinaProfessorRepository {
             if (!disciplinaProfessorPrisma) {
                 throw HttpException_1.HttpException.NotFoundError("Disciplina x Professor não encontrada");
             }
-            const disciplinaProfessor = new DisciplinaProfessor_1.DisciplinaProfessor(new Disciplina_1.Disciplina(disciplinaProfessorPrisma.disciplina.nome, disciplinaProfessorPrisma.disciplina.id), new Professor_1.Professor(disciplinaProfessorPrisma.professor.cargaHoraria, disciplinaProfessorPrisma.professor.id), disciplinaProfessorPrisma.id);
+            const disciplinaProfessor = new DisciplinaProfessor_1.DisciplinaProfessor(new Disciplina_1.Disciplina(disciplinaProfessorPrisma.disciplina.nome, disciplinaProfessorPrisma.disciplina.id), new Professor_1.Professor(disciplinaProfessorPrisma.professor.cargaHoraria, disciplinaProfessorPrisma.professor.nome, disciplinaProfessorPrisma.professor.matricula, disciplinaProfessorPrisma.professor.id), disciplinaProfessorPrisma.id);
             return disciplinaProfessor;
         });
     }
@@ -55,7 +55,7 @@ class DisciplinaProfessorRepository {
                 }
             });
             DisciplinaProfessor_1.DisciplinaProfessor.disciplinaProfessorList = disciplinaProfessorPrisma.map((disciplinaProfessor) => {
-                return new DisciplinaProfessor_1.DisciplinaProfessor(new Disciplina_1.Disciplina(disciplinaProfessor.disciplina.nome, disciplinaProfessor.disciplina.id), new Professor_1.Professor(disciplinaProfessor.professor.cargaHoraria, disciplinaProfessor.professor.id), disciplinaProfessor.id);
+                return new DisciplinaProfessor_1.DisciplinaProfessor(new Disciplina_1.Disciplina(disciplinaProfessor.disciplina.nome, disciplinaProfessor.disciplina.id), new Professor_1.Professor(disciplinaProfessor.professor.cargaHoraria, disciplinaProfessor.professor.nome, disciplinaProfessor.professor.matricula, disciplinaProfessor.professor.id), disciplinaProfessor.id);
             });
             return DisciplinaProfessor_1.DisciplinaProfessor.disciplinaProfessorList;
         });

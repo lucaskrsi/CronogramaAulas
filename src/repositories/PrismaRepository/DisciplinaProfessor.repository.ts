@@ -45,6 +45,8 @@ export class DisciplinaProfessorRepository implements IDisciplinaProfessorReposi
             ),
             new Professor(
                 disciplinaProfessorPrisma.professor.cargaHoraria,
+                disciplinaProfessorPrisma.professor.nome,
+                disciplinaProfessorPrisma.professor.matricula,
                 disciplinaProfessorPrisma.professor.id,
             ),
             disciplinaProfessorPrisma.id,
@@ -68,6 +70,8 @@ export class DisciplinaProfessorRepository implements IDisciplinaProfessorReposi
                 ),
                 new Professor(
                     disciplinaProfessor.professor.cargaHoraria,
+                    disciplinaProfessor.professor.nome,
+                    disciplinaProfessor.professor.matricula,
                     disciplinaProfessor.professor.id,
                 ),
                 disciplinaProfessor.id,

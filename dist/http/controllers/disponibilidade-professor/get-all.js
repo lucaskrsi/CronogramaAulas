@@ -21,7 +21,8 @@ function getAll(req, res, next) {
                 return {
                     id: disponibilidadeProfessor.getId(),
                     diaDaSemana: disponibilidadeProfessor.getDiaDaSemana(),
-                    turno: disponibilidadeProfessor.getTurno(),
+                    incioHora: disponibilidadeProfessor.getInicioHora(),
+                    fimHora: disponibilidadeProfessor.getFimHora(),
                     professor: {
                         id: disponibilidadeProfessor.getProfessor().getId(),
                         cargaHoraria: disponibilidadeProfessor.getProfessor().getCargaHoraria(),

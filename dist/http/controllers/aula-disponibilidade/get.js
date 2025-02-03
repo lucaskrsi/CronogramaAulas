@@ -42,7 +42,8 @@ function get(req, res, next) {
                     disponibilidadeProfessor: {
                         id: aulaDisponibilidade.getDisponibilidadeProfessor().getId(),
                         diaDaSemana: aulaDisponibilidade.getDisponibilidadeProfessor().getDiaDaSemana(),
-                        turno: aulaDisponibilidade.getDisponibilidadeProfessor().getTurno(),
+                        inicioHora: aulaDisponibilidade.getDisponibilidadeProfessor().getInicioHora(),
+                        fimHora: aulaDisponibilidade.getDisponibilidadeProfessor().getFimHora(),
                         professor: {
                             id: aulaDisponibilidade.getDisponibilidadeProfessor().getProfessor().getId(),
                             cargaHoraria: aulaDisponibilidade.getDisponibilidadeProfessor().getProfessor().getCargaHoraria(),

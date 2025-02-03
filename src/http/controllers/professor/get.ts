@@ -16,6 +16,8 @@ export async function get(req: Request, res: Response, next: NextFunction) {
             data: {
                 id: professor.getId(),
                 cargaHoraria: professor.getCargaHoraria(),
+                nome: professor.getNome(),
+                matricula: professor.getMatricula(),
             },
         });
     } catch (e) {

@@ -19,6 +19,8 @@ class ProfessorRepository {
             let professorPrisma = yield client_1.prisma.professor.create({
                 data: {
                     cargaHoraria: professor.getCargaHoraria(),
+                    nome: professor.getNome(),
+                    matricula: professor.getMatricula(),
                 },
             });
             professor.setId(professorPrisma.id);
@@ -35,7 +37,7 @@ class ProfessorRepository {
             if (!professorPrisma) {
                 throw HttpException_1.HttpException.NotFoundError("Professor não encontrada");
             }
-            const professor = new Professor_1.Professor(professorPrisma.cargaHoraria, professorPrisma.id);
+            const professor = new Professor_1.Professor(professorPrisma.cargaHoraria, professorPrisma.nome, professorPrisma.matricula, professorPrisma.id);
             return professor;
         });
     }
@@ -43,12 +45,12 @@ class ProfessorRepository {
         return __awaiter(this, void 0, void 0, function* () {
             const professorPrisma = yield client_1.prisma.professor.findMany();
             Professor_1.Professor.professorList = professorPrisma.map((professor) => {
-                return new Professor_1.Professor(professor.cargaHoraria, professor.id);
+                return new Professor_1.Professor(professor.cargaHoraria, professor.nome, professor.matricula, professor.id);
             });
             return Professor_1.Professor.professorList;
         });
     }
-    update(id, cargaHoraria) {
+    update(id, cargaHoraria, nome, matricula) {
         return __awaiter(this, void 0, void 0, function* () {
             let professorPrisma = yield this.get(id);
             if (!professorPrisma) {
@@ -60,6 +62,8 @@ class ProfessorRepository {
                 },
                 data: {
                     cargaHoraria: (typeof cargaHoraria == "number") ? cargaHoraria : professorPrisma.getCargaHoraria(),
+                    nome: (nome && typeof nome === "string") ? nome : professorPrisma.getNome(),
+                    matricula: (typeof matricula === "number") ? matricula : professorPrisma.getMatricula(),
                 }
             });
             professorPrisma.setCargaHoraria(professor.cargaHoraria);

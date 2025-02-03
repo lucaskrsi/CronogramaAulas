@@ -25,15 +25,17 @@ model Usuario {
 
 model Professor {
   id                       String                     @id @default(uuid())
-  cargaHoraria             Int                        @unique
+  cargaHoraria             Int
+  nome                     String
+  matricula                Int                        @unique
   DisponibilidadeProfessor DisponibilidadeProfessor[]
   DisciplinaProfessor      DisciplinaProfessor[]
 }
 
 model Aula {
   id                  String                @id @default(uuid())
-  inicioHora          DateTime
-  fimHora             DateTime
+  inicioHora          String
+  fimHora             String
   diaDaSemana         String
   turmaId             String
   turma               Turma                 @relation(fields: [turmaId], references: [id])
@@ -48,7 +50,8 @@ model Aula {
 model DisponibilidadeProfessor {
   id                  String                @id @default(uuid())
   diaDaSemana         String
-  turno               String
+  inicioHora          String
+  fimHora             String
   professorId         String
   professor           Professor             @relation(fields: [professorId], references: [id])
   AulaDisponibilidade AulaDisponibilidade[]
@@ -69,7 +72,7 @@ model AulaDisponibilidade {
 
 model Disciplina {
   id                  String                @id @default(uuid())
-  nome                String
+  nome                String                @unique
   Aula                Aula[]
   DisciplinaProfessor DisciplinaProfessor[]
   DisciplinaGrade     DisciplinaGrade[]

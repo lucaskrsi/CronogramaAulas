@@ -6,8 +6,10 @@ export interface IDisponibilidadeProfessor
     setId(id: string): void;
     getDiaDaSemana(): string;
     setDiaDaSemana(diaDaSemana: string): void;
-    getTurno(): string;
-    setTurno(turno: string): void;
+    getInicioHora(): string;
+    setInicioHora(inicioHora: string): void;
+    getFimHora(): string;
+    setFimHora(fimHora: string): void;
     getProfessor(): IProfessor;
     setProfessor(professor: IProfessor): void;
 }

@@ -13,7 +13,8 @@ export class DisponibilidadeProfessorRepository implements IDisponibilidadeProfe
         let disponibilidadeProfessorPrisma = await prisma.disponibilidadeProfessor.create({
             data: {
                 diaDaSemana: disponibilidadeProfessor.getDiaDaSemana(),
-                turno: disponibilidadeProfessor.getTurno(),
+                inicioHora: disponibilidadeProfessor.getInicioHora(),
+                fimHora: disponibilidadeProfessor.getFimHora(),
                 professorId: disponibilidadeProfessor.getProfessor().getId()
             },
         })
@@ -38,9 +39,12 @@ export class DisponibilidadeProfessorRepository implements IDisponibilidadeProfe
 
         const disponibilidadeProfessor = new DisponibilidadeProfessor(
             disponibilidadeProfessorPrisma.diaDaSemana,
-            disponibilidadeProfessorPrisma.turno,
+            disponibilidadeProfessorPrisma.inicioHora,
+            disponibilidadeProfessorPrisma.fimHora,
             new Professor(
                 disponibilidadeProfessorPrisma.professor.cargaHoraria,
+                disponibilidadeProfessorPrisma.professor.nome,
+                disponibilidadeProfessorPrisma.professor.matricula,
                 disponibilidadeProfessorPrisma.professor.id
             ),
             disponibilidadeProfessorPrisma.id,
@@ -58,9 +62,12 @@ export class DisponibilidadeProfessorRepository implements IDisponibilidadeProfe
         DisponibilidadeProfessor.disponibilidadeProfessorList = disponibilidadeProfessorPrisma.map((disponibilidadeProfessor) => {
             return new DisponibilidadeProfessor(
                 disponibilidadeProfessor.diaDaSemana,
-            disponibilidadeProfessor.turno,
+            disponibilidadeProfessor.inicioHora,
+            disponibilidadeProfessor.fimHora,
             new Professor(
                 disponibilidadeProfessor.professor.cargaHoraria,
+                disponibilidadeProfessor.professor.nome,
+                disponibilidadeProfessor.professor.matricula,
                 disponibilidadeProfessor.professor.id
             ),
             disponibilidadeProfessor.id,
@@ -70,7 +77,7 @@ export class DisponibilidadeProfessorRepository implements IDisponibilidadeProfe
         return DisponibilidadeProfessor.disponibilidadeProfessorList;
     }
 
-    async update(id: string, diaDaSemana?: string, turno?: string, professor?: IProfessor): Promise<IDisponibilidadeProfessor> {
+    async update(id: string, diaDaSemana?: string, inicioHora?: string, fimHora?: string, professor?: IProfessor): Promise<IDisponibilidadeProfessor> {
         let disponibilidadeProfessorPrisma = await this.get(id);
 
         if (!disponibilidadeProfessorPrisma) {
@@ -83,13 +90,15 @@ export class DisponibilidadeProfessorRepository implements IDisponibilidadeProfe
             },
             data: {
                 diaDaSemana: (typeof diaDaSemana == "string") ? diaDaSemana : disponibilidadeProfessorPrisma.getDiaDaSemana(),
-                turno: (typeof turno == "string") ? turno : disponibilidadeProfessorPrisma.getTurno(),
+                inicioHora: (typeof inicioHora == "string") ? inicioHora : disponibilidadeProfessorPrisma.getInicioHora(),
+                fimHora: (typeof fimHora == "string") ? fimHora : disponibilidadeProfessorPrisma.getFimHora(),
                 professorId: (typeof professor == "string") ? professor : disponibilidadeProfessorPrisma.getProfessor().getId(),
             }
         })
 
         disponibilidadeProfessorPrisma.setDiaDaSemana(disponibilidadeProfessor.diaDaSemana);
-        disponibilidadeProfessorPrisma.setTurno(disponibilidadeProfessor.turno);
+        disponibilidadeProfessorPrisma.setInicioHora(disponibilidadeProfessor.inicioHora);
+        disponibilidadeProfessorPrisma.setFimHora(disponibilidadeProfessor.fimHora);
         return disponibilidadeProfessorPrisma;
     }
 

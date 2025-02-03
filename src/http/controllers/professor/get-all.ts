@@ -11,6 +11,8 @@ export async function getAll(req: Request, res: Response, next: NextFunction) {
             return {
                 id: professor.getId(),
                 cargaHoraria: professor.getCargaHoraria(),
+                nome: professor.getNome(),
+                matricula: professor.getMatricula(),
             };
         });
         res.status(200).json({

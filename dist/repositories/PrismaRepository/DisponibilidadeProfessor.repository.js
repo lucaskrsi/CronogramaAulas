@@ -20,7 +20,8 @@ class DisponibilidadeProfessorRepository {
             let disponibilidadeProfessorPrisma = yield client_1.prisma.disponibilidadeProfessor.create({
                 data: {
                     diaDaSemana: disponibilidadeProfessor.getDiaDaSemana(),
-                    turno: disponibilidadeProfessor.getTurno(),
+                    inicioHora: disponibilidadeProfessor.getInicioHora(),
+                    fimHora: disponibilidadeProfessor.getFimHora(),
                     professorId: disponibilidadeProfessor.getProfessor().getId()
                 },
             });
@@ -41,7 +42,7 @@ class DisponibilidadeProfessorRepository {
             if (!disponibilidadeProfessorPrisma) {
                 throw HttpException_1.HttpException.NotFoundError("Disponibilidade x Professor não encontrada");
             }
-            const disponibilidadeProfessor = new DisponibilidadeProfessor_1.DisponibilidadeProfessor(disponibilidadeProfessorPrisma.diaDaSemana, disponibilidadeProfessorPrisma.turno, new Professor_1.Professor(disponibilidadeProfessorPrisma.professor.cargaHoraria, disponibilidadeProfessorPrisma.professor.id), disponibilidadeProfessorPrisma.id);
+            const disponibilidadeProfessor = new DisponibilidadeProfessor_1.DisponibilidadeProfessor(disponibilidadeProfessorPrisma.diaDaSemana, disponibilidadeProfessorPrisma.inicioHora, disponibilidadeProfessorPrisma.fimHora, new Professor_1.Professor(disponibilidadeProfessorPrisma.professor.cargaHoraria, disponibilidadeProfessorPrisma.professor.nome, disponibilidadeProfessorPrisma.professor.matricula, disponibilidadeProfessorPrisma.professor.id), disponibilidadeProfessorPrisma.id);
             return disponibilidadeProfessor;
         });
     }
@@ -53,12 +54,12 @@ class DisponibilidadeProfessorRepository {
                 }
             });
             DisponibilidadeProfessor_1.DisponibilidadeProfessor.disponibilidadeProfessorList = disponibilidadeProfessorPrisma.map((disponibilidadeProfessor) => {
-                return new DisponibilidadeProfessor_1.DisponibilidadeProfessor(disponibilidadeProfessor.diaDaSemana, disponibilidadeProfessor.turno, new Professor_1.Professor(disponibilidadeProfessor.professor.cargaHoraria, disponibilidadeProfessor.professor.id), disponibilidadeProfessor.id);
+                return new DisponibilidadeProfessor_1.DisponibilidadeProfessor(disponibilidadeProfessor.diaDaSemana, disponibilidadeProfessor.inicioHora, disponibilidadeProfessor.fimHora, new Professor_1.Professor(disponibilidadeProfessor.professor.cargaHoraria, disponibilidadeProfessor.professor.nome, disponibilidadeProfessor.professor.matricula, disponibilidadeProfessor.professor.id), disponibilidadeProfessor.id);
             });
             return DisponibilidadeProfessor_1.DisponibilidadeProfessor.disponibilidadeProfessorList;
         });
     }
-    update(id, diaDaSemana, turno, professor) {
+    update(id, diaDaSemana, inicioHora, fimHora, professor) {
         return __awaiter(this, void 0, void 0, function* () {
             let disponibilidadeProfessorPrisma = yield this.get(id);
             if (!disponibilidadeProfessorPrisma) {
@@ -70,12 +71,14 @@ class DisponibilidadeProfessorRepository {
                 },
                 data: {
                     diaDaSemana: (typeof diaDaSemana == "string") ? diaDaSemana : disponibilidadeProfessorPrisma.getDiaDaSemana(),
-                    turno: (typeof turno == "string") ? turno : disponibilidadeProfessorPrisma.getTurno(),
+                    inicioHora: (typeof inicioHora == "string") ? inicioHora : disponibilidadeProfessorPrisma.getInicioHora(),
+                    fimHora: (typeof fimHora == "string") ? fimHora : disponibilidadeProfessorPrisma.getFimHora(),
                     professorId: (typeof professor == "string") ? professor : disponibilidadeProfessorPrisma.getProfessor().getId(),
                 }
             });
             disponibilidadeProfessorPrisma.setDiaDaSemana(disponibilidadeProfessor.diaDaSemana);
-            disponibilidadeProfessorPrisma.setTurno(disponibilidadeProfessor.turno);
+            disponibilidadeProfessorPrisma.setInicioHora(disponibilidadeProfessor.inicioHora);
+            disponibilidadeProfessorPrisma.setFimHora(disponibilidadeProfessor.fimHora);
             return disponibilidadeProfessorPrisma;
         });
     }

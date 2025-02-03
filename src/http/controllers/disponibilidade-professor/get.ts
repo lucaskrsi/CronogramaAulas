@@ -16,7 +16,8 @@ export async function get(req: Request, res: Response, next: NextFunction) {
             data: {
                 id: disponibilidadeProfessor.getId(),
                 diaDaSemana: disponibilidadeProfessor.getDiaDaSemana(),
-                turno: disponibilidadeProfessor.getTurno(),
+                inicioHora: disponibilidadeProfessor.getInicioHora(),
+                fimHora: disponibilidadeProfessor.getFimHora(),
                 professor: {
                     id: disponibilidadeProfessor.getProfessor().getId(),
                     cargaHoraria: disponibilidadeProfessor.getProfessor().getCargaHoraria(),

@@ -20,14 +20,15 @@ function create(req, res, next) {
         try {
             const createBody = zod_1.z.object({
                 diaDaSemana: zod_1.z.string().max(100),
-                turno: zod_1.z.string().max(100),
+                inicioHora: zod_1.z.string(),
+                fimHora: zod_1.z.string(),
                 professorId: zod_1.z.string().max(36),
             });
-            const { diaDaSemana, turno, professorId } = createBody.parse(req.body);
+            const { diaDaSemana, inicioHora, fimHora, professorId } = createBody.parse(req.body);
             const disponibilidadeProfessorRepository = (0, makeDisponibilidadeProfessorRepository_ts_1.makeDisponibilidadeProfessorRepository)();
             const professorRepository = (0, makeProfessorRepository_1.makeProfessorRepository)();
             const professor = yield professorRepository.get(professorId);
-            const disponibilidadeProfessor = yield disponibilidadeProfessorRepository.create(new DisponibilidadeProfessor_1.DisponibilidadeProfessor(diaDaSemana, turno, professor));
+            const disponibilidadeProfessor = yield disponibilidadeProfessorRepository.create(new DisponibilidadeProfessor_1.DisponibilidadeProfessor(diaDaSemana, inicioHora, fimHora, professor));
             res.status(201).json({
                 data: {
                     disponibilidadeProfessorId: disponibilidadeProfessor.getId(),

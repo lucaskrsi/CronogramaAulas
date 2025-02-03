@@ -6,83 +6,83 @@ import { Disciplina } from "../../models/Disciplina";
 
 export class DisciplinaRepository implements IDisciplinaRepository {
 
-    async create(disciplina: IDisciplina): Promise < IDisciplina > {
+    async create(disciplina: IDisciplina): Promise<IDisciplina> {
 
-            let disciplinaPrisma = await prisma.disciplina.create({
-                data: {
-                    nome: disciplina.getNome(),
-                },
-            })
+        let disciplinaPrisma = await prisma.disciplina.create({
+            data: {
+                nome: disciplina.getNome(),
+            },
+        })
 
         disciplina.setId(disciplinaPrisma.id);
-            return disciplina;
+        return disciplina;
+    }
+
+    async get(id: string): Promise<IDisciplina> {
+        const disciplinaPrisma = await prisma.disciplina.findUnique({
+            where: {
+                id: id,
+            },
+        })
+
+        if (!disciplinaPrisma) {
+            throw HttpException.NotFoundError("Disciplina não encontrada");
         }
-
-    async get(id: string): Promise < IDisciplina > {
-            const disciplinaPrisma = await prisma.disciplina.findUnique({
-                where: {
-                    id: id,
-                },
-            })
-
-        if(!disciplinaPrisma) {
-                throw HttpException.NotFoundError("Disciplina não encontrada");
-            }
 
         const disciplina = new Disciplina(
-                disciplinaPrisma.nome,
-                disciplinaPrisma.id
+            disciplinaPrisma.nome,
+            disciplinaPrisma.id
+        );
+
+        return disciplina;
+    }
+
+    async getAll(): Promise<IDisciplina[]> {
+        const disciplinaPrisma = await prisma.disciplina.findMany();
+        Disciplina.disciplinaList = disciplinaPrisma.map((disciplina) => {
+            return new Disciplina(
+                disciplina.nome,
+                disciplina.id
             );
+        });
 
-            return disciplina;
+        return Disciplina.disciplinaList;
+    }
+
+    async update(id: string, nome?: string): Promise<IDisciplina> {
+        let disciplinaPrisma = await this.get(id);
+
+        if (!disciplinaPrisma) {
+            throw HttpException.NotFoundError("Disciplina não encontrada");
         }
-
-    async getAll(): Promise < IDisciplina[] > {
-            const disciplinaPrisma = await prisma.disciplina.findMany();
-            Disciplina.disciplinaList = disciplinaPrisma.map((disciplina) => {
-                return new Disciplina(
-                    disciplina.nome,
-                    disciplina.id
-                );
-            });
-
-            return Disciplina.disciplinaList;
-        }
-
-    async update(id: string, nome ?: string): Promise < IDisciplina > {
-            let disciplinaPrisma = await this.get(id);
-
-            if(!disciplinaPrisma) {
-                throw HttpException.NotFoundError("Disciplina não encontrada");
-            }
 
         let disciplina = await prisma.disciplina.update({
-                where: {
-                    id: disciplinaPrisma.getId(),
-                },
-                data: {
-                    nome: (typeof nome == "string") ? nome : disciplinaPrisma.getNome(),
-                }
-            })
+            where: {
+                id: disciplinaPrisma.getId(),
+            },
+            data: {
+                nome: (typeof nome == "string") ? nome : disciplinaPrisma.getNome(),
+            }
+        })
 
         disciplinaPrisma.setNome(disciplina.nome);
-            return disciplinaPrisma;
+        return disciplinaPrisma;
+    }
+
+    async delete(id: string): Promise<string> {
+        let disciplinaPrisma = await this.get(id);
+
+        if (!disciplinaPrisma) {
+            throw HttpException.NotFoundError("Disciplina não encontrada");
         }
-
-    async delete (id: string): Promise<string>{
-            let disciplinaPrisma = await this.get(id);
-
-            if(!disciplinaPrisma) {
-                throw HttpException.NotFoundError("Disciplina não encontrada");
-            }
 
         let disciplina = await prisma.disciplina.delete({
-                where: {
-                    id: disciplinaPrisma.getId(),
-                }
-            })
+            where: {
+                id: disciplinaPrisma.getId(),
+            }
+        })
 
         return disciplina.id.toString();
-        }
-
     }
+
+}

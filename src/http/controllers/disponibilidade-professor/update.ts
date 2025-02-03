@@ -8,7 +8,8 @@ export async function update(req: Request, res: Response, next: NextFunction) {
     try {
         const createBody = z.object({
             diaDaSemana: z.string().max(100),
-            turno: z.string().max(100),
+            inicioHora: z.string(),
+            fimHora: z.string(),
             professorId: z.string().max(36),
         });
 
@@ -16,7 +17,7 @@ export async function update(req: Request, res: Response, next: NextFunction) {
             id: z.string().max(36),
         })
 
-        const { diaDaSemana, turno, professorId } = createBody.parse(req.body);
+        const { diaDaSemana, inicioHora, fimHora, professorId } = createBody.parse(req.body);
         const { id } = createParam.parse(req.params);
 
         const disponibilidadeProfessorRepository = makeDisponibilidadeProfessorRepository();
@@ -25,7 +26,7 @@ export async function update(req: Request, res: Response, next: NextFunction) {
         const professor = await professorRepository.get(professorId);
 
 
-        const disponibilidadeProfessor = await disponibilidadeProfessorRepository.update(id, diaDaSemana, turno, professor);
+        const disponibilidadeProfessor = await disponibilidadeProfessorRepository.update(id, diaDaSemana, inicioHora, fimHora, professor);
         res.status(200).json({
             data: { disponibilidadeProfessorId: disponibilidadeProfessor.getId() },
             message: 'Atualizado com sucesso!',

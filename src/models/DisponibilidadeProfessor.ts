@@ -6,16 +6,18 @@ export class DisponibilidadeProfessor implements IDisponibilidadeProfessor
 {
     private _id: string;
     private _diaDaSemana: string;
-    private _turno: string;
+    private _inicioHora: string;
+    private _fimHora: string;
     private _professor: IProfessor;
     public static disponibilidadeProfessorList: IDisponibilidadeProfessor[];
     
 
-    constructor(diaDaSemana: string, turno: string, professor: IProfessor, id?: string)
+    constructor(diaDaSemana: string, inicioHora: string, fimHora: string, professor: IProfessor, id?: string)
     {
         this._id = id;
         this._diaDaSemana = diaDaSemana;
-        this._turno = turno;
+        this._inicioHora = inicioHora;
+        this._fimHora = fimHora;
         this._professor = professor;
     }
 
@@ -39,14 +41,24 @@ export class DisponibilidadeProfessor implements IDisponibilidadeProfessor
         this._diaDaSemana = diaDaSemana;
     }
     
-    public getTurno(): string
+    public getInicioHora(): string
     {
-        return this._turno;
+        return this._inicioHora;
     }
     
-    public setTurno(turno: string): void
+    public setInicioHora(inicioHora: string): void
     {
-        this._turno = turno;
+        this._inicioHora = inicioHora;
+    }
+
+    public getFimHora(): string
+    {
+        return this._fimHora;
+    }
+
+    public setFimHora(fimHora: string): void
+    {
+        this._fimHora = fimHora;
     }
     
     public getProfessor(): IProfessor

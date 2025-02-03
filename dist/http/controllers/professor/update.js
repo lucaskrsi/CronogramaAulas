@@ -18,14 +18,16 @@ function update(req, res, next) {
         try {
             const createBody = zod_1.z.object({
                 cargaHoraria: zod_1.z.coerce.number(),
+                nome: zod_1.z.string().max(100),
+                matricula: zod_1.z.coerce.number()
             });
             const createParam = zod_1.z.object({
                 id: zod_1.z.string().max(36),
             });
-            const { cargaHoraria } = createBody.parse(req.body);
+            const { cargaHoraria, nome, matricula } = createBody.parse(req.body);
             const { id } = createParam.parse(req.params);
             const professorRepository = (0, makeProfessorRepository_1.makeProfessorRepository)();
-            const professor = yield professorRepository.update(id, cargaHoraria);
+            const professor = yield professorRepository.update(id, cargaHoraria, nome, matricula);
             res.status(200).json({
                 data: { professorId: professor.getId() },
                 message: 'Atualizado com sucesso!',
