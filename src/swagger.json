@@ -2862,7 +2862,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID da Disciplina x Prfoessor",
+                        "description": "ID da Disciplina x Professor",
                         "required": true
                     }
                 ],
@@ -2873,7 +2873,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/DeleteTurmaProfessorResponse"
+                                    "$ref": "#/components/schemas/DeleteDisciplinaProfessorResponse"
                                 }
                             }
                         }
@@ -2902,6 +2902,1231 @@
                     },
                     "404": {
                         "description": "Turma x Professor não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/disponibilidades-professores/": {
+            "post": {
+                "summary": "Cria a Disponibilidade do Professor",
+                "description": "Cria um registro das informações de disponibilidade dos Professores",
+                "tags": [
+                    "Disponibilidade Professor"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostDisponibilidadeProfessorRequest"
+                            },
+                            "examples": {
+                                "disponibilidadeProfessor": {
+                                    "value": {
+                                        "diaDaSemana": "Quinta-feira",
+                                        "inicioHora": "08:00",
+                                        "fimHora": "12:00",
+                                        "professorId": "889b8600-5693-4d64-9ea1-a7a1886e022f"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/PostDisponibilidadeProfessorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Tipos inválidos nos campos enviados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Disciplina x Professor já existe",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Busca todas as Disponibilidades dos Professores",
+                "description": "Busca todas as disponibilidades dos professores",
+                "tags": [
+                    "Disponibilidade Professor"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/GetAllDisponibilidadesProfessoresResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Tipos inválidos nos campos enviados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Disponibilidades dos Professores não encontradas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/disponibilidades-professores/{id}": {
+            "get": {
+                "summary": "Busca Disponibilidades do Professor",
+                "description": "Busca disponibilidades dos professores por ID",
+                "tags": [
+                    "Disponibilidade Professor"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da Disponibilidade do Professor",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/GetDisponibilidadeProfessorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Tipos inválidos nos campos enviados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Disponibilidade do Professor não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Atualiza Disponibilidade do Professor",
+                "description": "Atualiza Disponibilidade do Professor por ID",
+                "tags": [
+                    "Disponibilidade Professor"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da Disponibilidade do Professor",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PutDisponibilidadeProfessorRequest"
+                            },
+                            "examples": {
+                                "disponibilidadeProfessor": {
+                                    "value": {
+                                        "diaDaSemana": "Segunda-feira",
+                                        "inicioHora": "13:00",
+                                        "fimHora": "17:00",
+                                        "professorId": "5f73b06c-7ba2-4336-87c5-46bd8a4aac94"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/PutDisponibilidadeProfessorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Tipos inválidos nos campos enviados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Disponibilidade do Professor não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deleta Disponibilidade do Professor",
+                "description": "Exclui a disponibilidade professor por ID",
+                "tags": [
+                    "Disponibilidade Professor"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da Disponibilidade Professor",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/DeleteDisponibilidadeProfessorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Tipos inválidos nos campos enviados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Disponibilidade do Professor não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/aulas-disponibilidades/": {
+            "post": {
+                "summary": "Cria a Aula x Disponibilidade",
+                "description": "Cria uma relação entre Aula e Disponibilidade",
+                "tags": [
+                    "Aulas x Disponibilidades"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostAulaDisponibilidadeRequest"
+                            },
+                            "examples": {
+                                "aulaDIsponibilidade": {
+                                    "value": {
+                                        "aulaId": "889b8600-5693-4d64-9ea1-a7a1886e022f",
+                                        "disponibilidadeProfessorId": "2da0555c-4fbe-40a0-96c6-2423b344fc68"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/PostAulaDisponibilidadeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Tipos inválidos nos campos enviados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Aula x Disponibilidade já existe",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Busca todas as Aulas x Disponibilidades",
+                "description": "Busca todas as Aulas x Disponibilidades",
+                "tags": [
+                    "Aulas x Disponibilidades"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/GetAllAulasDisponibilidadesResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Tipos inválidos nos campos enviados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Aulas x Disponibilidades não encontradas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/aulas-disponibilidades/{id}": {
+            "get": {
+                "summary": "Busca Aula x Disponibilidade",
+                "description": "Busca uma relação de Aula x Disponibilidade ID",
+                "tags": [
+                    "Disponibilidade Professor"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da Aula x Disponibilidade",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/GetAulaDisponibilidadeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Tipos inválidos nos campos enviados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Aula x Disponibilidade não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Atualiza Aula x Disponibilidader",
+                "description": "Atualiza Aula x Disponibilidade por ID",
+                "tags": [
+                    "Aulas x Disponibilidades"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da Aula x Disponibilidade",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PutAulaDisponibilidadeRequest"
+                            },
+                            "examples": {
+                                "disponibilidadeProfessor": {
+                                    "value": {
+                                        "aulaId": "c4616137-6464-4b84-8d27-792ec874b10c",
+                                        "disponibilidadeProfessorId": "5f73b06c-7ba2-4336-87c5-46bd8a4aac94"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/PutAulDisponibilidadeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Tipos inválidos nos campos enviados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Aula x Disponibilidade não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deleta Aula x Disponibilidade",
+                "description": "Exclui a aula x disponibilidade por ID",
+                "tags": [
+                    "Aulas x Disponibilidades"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da Aula x DIsponibilidade",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/DeleteAulaDisponibilidadeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Tipos inválidos nos campos enviados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Aula x Disponibilidade não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/aulas/": {
+            "post": {
+                "summary": "Cria uma Aula",
+                "description": "Cria uma Aula",
+                "tags": [
+                    "Aulas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostAulaDisponibilidadeRequest"
+                            },
+                            "examples": {
+                                "aulaDIsponibilidade": {
+                                    "value": {
+                                        "aulaId": "889b8600-5693-4d64-9ea1-a7a1886e022f",
+                                        "disponibilidadeProfessorId": "2da0555c-4fbe-40a0-96c6-2423b344fc68"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/PostAulaDisponibilidadeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Tipos inválidos nos campos enviados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Aula x Disponibilidade já existe",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Busca todas as Aulas x Disponibilidades",
+                "description": "Busca todas as Aulas x Disponibilidades",
+                "tags": [
+                    "Aulas x Disponibilidades"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/GetAllAulasDisponibilidadesResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Tipos inválidos nos campos enviados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Aulas x Disponibilidades não encontradas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/aulas/{id}": {
+            "get": {
+                "summary": "Busca Aula x Disponibilidade",
+                "description": "Busca uma relação de Aula x Disponibilidade ID",
+                "tags": [
+                    "Disponibilidade Professor"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da Aula x Disponibilidade",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/GetAulaDisponibilidadeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Tipos inválidos nos campos enviados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Aula x Disponibilidade não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Atualiza Aula x Disponibilidader",
+                "description": "Atualiza Aula x Disponibilidade por ID",
+                "tags": [
+                    "Aulas x Disponibilidades"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da Aula x Disponibilidade",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PutAulaDisponibilidadeRequest"
+                            },
+                            "examples": {
+                                "disponibilidadeProfessor": {
+                                    "value": {
+                                        "aulaId": "c4616137-6464-4b84-8d27-792ec874b10c",
+                                        "disponibilidadeProfessorId": "5f73b06c-7ba2-4336-87c5-46bd8a4aac94"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/PutAulDisponibilidadeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Tipos inválidos nos campos enviados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Aula x Disponibilidade não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deleta Aula x Disponibilidade",
+                "description": "Exclui a aula x disponibilidade por ID",
+                "tags": [
+                    "Aulas x Disponibilidades"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da Aula x DIsponibilidade",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/DeleteAulaDisponibilidadeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Tipos inválidos nos campos enviados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token inválido",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Aula x Disponibilidade não encontrada",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3956,7 +5181,414 @@
                     }
                 }
             },
-            
+            "PostDisponibilidadeProfessorRequest": {
+                "type": "object",
+                "properties": {
+                    "diaDaSemana": {
+                        "type": "string"
+                    },
+                    "inicioHora": {
+                        "type": "string"
+                    },
+                    "fimHora": {
+                        "type": "string"
+                    },
+                    "professorId": {
+                        "type": "string"
+                    }
+                }
+            },
+            "PostDisponibilidadeProfessorResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "disponibilidadeProfessorId": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "GetAllTDisponibilidadesProfessoresResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "disponibilidadeProfessor": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "diaDaSemana": {
+                                            "type": "string"
+                                        },
+                                        "inicioHora": {
+                                            "type": "string"
+                                        },
+                                        "fimHora": {
+                                            "type": "string"
+                                        },
+                                        "professorId": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "GetDisponibilidadeProfessorResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "diaDaSemana": {
+                                "type": "string"
+                            },
+                            "inicioHora": {
+                                "type": "string"
+                            },
+                            "fimHora": {
+                                "type": "string"
+                            },
+                            "professorId": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "PutDisponibilidadeProfessorRequest": {
+                "type": "object",
+                "properties": {
+                    "diaDaSemana": {
+                        "type": "string"
+                    },
+                    "inicioHora": {
+                        "type": "string"
+                    },
+                    "fimHora": {
+                        "type": "string"
+                    },
+                    "professorId": {
+                        "type": "string"
+                    }
+                }
+            },
+            "PutDisponibilidadeProfessorResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "disponibilidadeProfessorId": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "DeleteDisponibilidadeProfessorResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "disponibilidadeProfessorId": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "PostAulaDisponibilidadeRequest": {
+                "type": "object",
+                "properties": {
+                    "aulaId": {
+                        "type": "string"
+                    },
+                    "disponibilidadeProfessorId": {
+                        "type": "string"
+                    }
+                }
+            },
+            "PostAulaDisponibilidadeResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "aulaDisponibilidadeId": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "GetAllTAulaDisponibilidadeResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "aulasDisponibilidades": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "aulaId": {
+                                            "type": "string"
+                                        },
+                                        "disponibilidadeProfessorId": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "GetAulaDisponibilidadeResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "aulaId": {
+                                "type": "string"
+                            },
+                            "disponibilidadeProfessorId": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "PutAulaDisponibilidadeRequest": {
+                "type": "object",
+                "properties": {
+                    "aulaId": {
+                        "type": "string"
+                    },
+                    "disponibilidadeProfessorId": {
+                        "type": "string"
+                    }
+                }
+            },
+            "PutAulaDisponibilidadeResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "aulaDisponibilidadeId": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "DeleteAulaDisponibilidadeResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "aulaDisponibilidadeId": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "PostAulaRequest": {
+                "type": "object",
+                "properties": {
+                    "inicioHora": {
+                        "type": "string"
+                    },
+                    "fimHora": {
+                        "type": "string"
+                    },
+                    "diaDaSemana": {
+                        "type": "string"
+                    },
+                    "disciplinaId": {
+                        "type": "string"
+                    },
+                    "turmaId": {
+                        "type": "string"
+                    }
+                }
+            },
+            "PostAulaResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "aulaId": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "GetAllTAulasResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "aulas": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "inicioHora": {
+                                            "type": "string"
+                                        },
+                                        "fimHora": {
+                                            "type": "string"
+                                        },
+                                        "diaDaSemana": {
+                                            "type": "string"
+                                        },
+                                        "disciplinaId": {
+                                            "type": "string"
+                                        },
+                                        "turmaId": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "GetAulaResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "inicioHora": {
+                                "type": "string"
+                            },
+                            "fimHora": {
+                                "type": "string"
+                            },
+                            "diaDaSemana": {
+                                "type": "string"
+                            },
+                            "disciplinaId": {
+                                "type": "string"
+                            },
+                            "turmaId": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "PutAulaRequest": {
+                "type": "object",
+                "properties": {
+                    "inicioHora": {
+                        "type": "string"
+                    },
+                    "fimHora": {
+                        "type": "string"
+                    },
+                    "diaDaSemana": {
+                        "type": "string"
+                    },
+                    "disciplinaId": {
+                        "type": "string"
+                    },
+                    "turmaId": {
+                        "type": "string"
+                    }
+                }
+            },
+            "PutAulaResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "aulaId": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "DeleteAulaResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "aulaId": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            }
         }
     }
 }
