@@ -55,6 +55,35 @@ export class DisciplinaProfessorRepository implements IDisciplinaProfessorReposi
         return disciplinaProfessor;
     }
 
+    async getByDisciplina(disciplina: IDisciplina): Promise<IDisciplinaProfessor[]> {
+        const disciplinaProfessorPrisma = await prisma.disciplinaProfessor.findMany({
+            where:{
+                disciplinaId: disciplina.getId(),
+            },
+            include: {
+                disciplina: true,
+                professor: true,
+            }
+        });
+        DisciplinaProfessor.disciplinaProfessorList = disciplinaProfessorPrisma.map((disciplinaProfessor) => {
+            return new DisciplinaProfessor(
+                new Disciplina(
+                    disciplinaProfessor.disciplina.nome,
+                    disciplinaProfessor.disciplina.id,
+                ),
+                new Professor(
+                    disciplinaProfessor.professor.cargaHoraria,
+                    disciplinaProfessor.professor.nome,
+                    disciplinaProfessor.professor.matricula,
+                    disciplinaProfessor.professor.id,
+                ),
+                disciplinaProfessor.id,
+            );
+        });
+
+        return DisciplinaProfessor.disciplinaProfessorList;
+    }
+
     async getAll(): Promise<IDisciplinaProfessor[]> {
         const disciplinaProfessorPrisma = await prisma.disciplinaProfessor.findMany({
             include: {

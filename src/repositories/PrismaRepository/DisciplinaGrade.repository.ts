@@ -55,6 +55,34 @@ export class DisciplinaGradeRepository implements IDisciplinaGradeRepository {
         return disciplinaGrade;
     }
 
+    public async getByGrade(grade: IGradeCurricular): Promise<IDisciplinaGrade[]> {
+        const disciplinaGradePrisma = await prisma.disciplinaGrade.findMany({
+            where: {
+                gradeId: grade.getId(),
+            },
+            include: {
+                disciplina: true,
+                gradeCurricular: true,
+            }
+        });
+        DisciplinaGrade.disciplinaGradeList = disciplinaGradePrisma.map((disciplinaGrade) => {
+            return new DisciplinaGrade(
+                disciplinaGrade.cargaHoraria,
+                new Disciplina(
+                disciplinaGrade.disciplina.nome,
+                disciplinaGrade.disciplina.id
+                ),
+                new GradeCurricular(
+                    disciplinaGrade.gradeCurricular.nome,
+                    disciplinaGrade.gradeCurricular.id
+                ),
+                disciplinaGrade.id
+            );
+        });
+
+        return DisciplinaGrade.disciplinaGradeList;
+    }
+
     async getAll(): Promise<IDisciplinaGrade[]> {
         const disciplinaGradePrisma = await prisma.disciplinaGrade.findMany({
             include: {

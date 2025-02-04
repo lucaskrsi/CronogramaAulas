@@ -53,6 +53,33 @@ export class DisponibilidadeProfessorRepository implements IDisponibilidadeProfe
         return disponibilidadeProfessor;
     }
 
+    async getByProfessor(professor: IProfessor): Promise<IDisponibilidadeProfessor[]> {
+        const disponibilidadeProfessorPrisma = await prisma.disponibilidadeProfessor.findMany({
+            where: {
+                professorId: professor.getId()
+            },
+            include: {
+                professor: true,
+            }
+        });
+        DisponibilidadeProfessor.disponibilidadeProfessorList = disponibilidadeProfessorPrisma.map((disponibilidadeProfessor) => {
+            return new DisponibilidadeProfessor(
+                disponibilidadeProfessor.diaDaSemana,
+            disponibilidadeProfessor.inicioHora,
+            disponibilidadeProfessor.fimHora,
+            new Professor(
+                disponibilidadeProfessor.professor.cargaHoraria,
+                disponibilidadeProfessor.professor.nome,
+                disponibilidadeProfessor.professor.matricula,
+                disponibilidadeProfessor.professor.id
+            ),
+            disponibilidadeProfessor.id,
+            );
+        });
+
+        return DisponibilidadeProfessor.disponibilidadeProfessorList;
+    }
+
     async getAll(): Promise<IDisponibilidadeProfessor[]> {
         const disponibilidadeProfessorPrisma = await prisma.disponibilidadeProfessor.findMany({
             include: {

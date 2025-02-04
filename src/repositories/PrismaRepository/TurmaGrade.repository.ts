@@ -55,6 +55,37 @@ export class TurmaGradeRepository implements ITurmaGradeRepository {
         return turmaGrade;
     }
 
+    public async getByTurma(turma: ITurma): Promise<ITurmaGrade>{
+        const turmaGradePrisma = await prisma.turmaGrade.findFirst({
+            where: {
+                turmaId: turma.getId(),
+            },
+            include: {
+                turma: true,
+                gradeCurricular: true,
+            }
+        })
+
+        if (!turmaGradePrisma) {
+            throw HttpException.NotFoundError("Turma x Grade curricular não encontrada");
+        }
+
+        const turmaGrade = new TurmaGrade(
+            turmaGradePrisma.ano,
+            new Turma(
+            turmaGradePrisma.turma.nome,
+            turmaGradePrisma.turma.id
+            ),
+            new GradeCurricular(
+                turmaGradePrisma.gradeCurricular.nome,
+                turmaGradePrisma.gradeCurricular.id
+            ),
+            turmaGradePrisma.id
+           );
+
+        return turmaGrade;
+    }
+
     async getAll(): Promise<ITurmaGrade[]> {
         const turmaGradePrisma = await prisma.turmaGrade.findMany({
             include: {
