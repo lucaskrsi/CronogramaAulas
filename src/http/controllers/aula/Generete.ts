@@ -6,11 +6,12 @@ import { Aula } from "../../../models/Aula";
 import { makeDisciplinaRepository } from "../../../repositories/factory/makeDisciplinaRepository";
 import { makeTurmaRepository } from "../../../repositories/factory/makeTurmaRepository";
 import { makeDisciplinaProfessorRepository } from "../../../repositories/factory/makeDisciplinaProfessorRepository";
-import { makeDisponibilidadeProfessorRepository } from "../../../repositories/factory/makeDisponibilidadeProfessorRepository";
+import { makeDisponibilidadeProfessorRepository } from "../../../repositories/factory/makeDisponibilidadeProfessorRepository.ts";
 import { makeAulaDisponibilidadeRepository } from "../../../repositories/factory/makeAulaDisponibilidadeRepository";
 import { makeProfessorRepository } from "../../../repositories/factory/makeProfessorRepository";
 import { makeDisciplinaGradeCurricularRepository } from "../../../repositories/factory/makeDisciplinaGradeCurricularRepository";
 import { makeGradeCurricularRepository } from "../../../repositories/factory/makeGradeCurricularRepository";
+
 
 export async function Generate(req: Request, res: Response, next: NextFunction) {
     try {
@@ -50,19 +51,19 @@ export async function Generate(req: Request, res: Response, next: NextFunction) 
         }
 
         // Obtém a grade curricular da turma
-        const gradeCurricular = await gradeCurricularRepository.getBySemestre(turmaId, semestre);
+        const gradeCurricular = await gradeCurricularRepository.getAll();
         if (!gradeCurricular) {
             throw new Error("Grade curricular não encontrada para o semestre informado.");
         }
 
         // Verifica se a disciplina está na grade curricular
-        const disciplinaNaGrade = await disciplinaGradeCurricularRepository.exists(disciplinaId, gradeCurricular.id);
+        const disciplinaNaGrade = await disciplinaGradeCurricularRepository.getAll() ==null;
         if (!disciplinaNaGrade) {
             throw new Error("Disciplina não pertence à grade curricular do semestre informado.");
         }
 
         // Obtém professores que ministram essa disciplina
-        const professores = await disciplinaProfessorRepository.getProfessoresByDisciplina(disciplinaId);
+        const professores = await disciplinaProfessorRepository.getAll();
         if (professores.length === 0) {
             throw new Error("Nenhum professor disponível para esta disciplina.");
         }
@@ -70,17 +71,22 @@ export async function Generate(req: Request, res: Response, next: NextFunction) 
         // Filtra professores disponíveis no horário solicitado
         let professorDisponivel = null;
         for (const professor of professores) {
-            const disponibilidade = await disponibilidadeProfessorRepository.getDisponibilidade(professor.id);
-            const disponivelNoHorario = disponibilidade.some((disp) => 
+            const disponibilidade = await disponibilidadeProfessorRepository.get(professor.getId());
+
+            // Verifica se disponibilidade é uma array válida antes de chamar .some()
+            if (Array.isArray(disponibilidade) && disponibilidade.length > 0) {
+                const disponivelNoHorario = disponibilidade.some((disp) => 
                 disp.diaDaSemana === diaDaSemana &&
                 disp.inicioHora <= inicioHora &&
                 disp.fimHora >= fimHora
-            );
+                );
 
-            if (disponivelNoHorario) {
-                professorDisponivel = professor;
+                if (disponivelNoHorario) {
+                    professorDisponivel = professor;
                 break;
+                }
             }
+
         }
 
         if (!professorDisponivel) {
