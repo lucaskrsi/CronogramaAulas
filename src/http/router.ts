@@ -10,6 +10,7 @@ import { gradeCurricularRoutes } from "./controllers/GradeCurricular.routes";
 import { professorRoutes } from "./controllers/Professor.routes";
 import { turmaRoutes } from "./controllers/Turma.routes";
 import { turmaGradeRoutes } from "./controllers/TurmaGrade.routes";
+import {gradeRoutes} from "./controllers/gradeRoutes";
 
 const router: Router = Router();
 
@@ -24,5 +25,7 @@ gradeCurricularRoutes(router);
 professorRoutes(router);
 turmaRoutes(router);
 turmaGradeRoutes(router);
+gradeRoutes(router);
+
 
 export { router };
