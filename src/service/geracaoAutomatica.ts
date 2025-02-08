@@ -6,7 +6,7 @@ export function gerarGradeHoraria(
     disponibilidadeProfessores: IDisponibilidadeProfessor[]
 ) {
     // Estrutura da grade (6 horários por dia, 5 dias úteis)
-    const diasSemana = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
+    const diasSemana = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira"];
     const grade: Record<string, any[]> = {};
 
     diasSemana.forEach((dia) => {

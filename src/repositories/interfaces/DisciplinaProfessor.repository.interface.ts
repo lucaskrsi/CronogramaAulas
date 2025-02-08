@@ -3,7 +3,7 @@ import { IDisciplinaProfessor } from "../../models/interfaces/DisciplinaProfesso
 import { IProfessor } from "../../models/interfaces/Professor.interface"
 
 export interface IDisciplinaProfessorRepository {
-    get(id: string): Promise<IDisciplinaProfessor>
+    get(id: string, canPass: boolean): Promise<IDisciplinaProfessor>
     getAll(): Promise<IDisciplinaProfessor[]>
     create(disciplinaProfessor: IDisciplinaProfessor): Promise<IDisciplinaProfessor>
     update(id: string, disciplina ?: IDisciplina, professor?: IProfessor): Promise < IDisciplinaProfessor >

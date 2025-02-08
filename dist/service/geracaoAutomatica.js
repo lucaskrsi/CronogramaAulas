@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.gerarGradeHoraria = void 0;
 function gerarGradeHoraria(disciplinasProfessores, disponibilidadeProfessores) {
     // Estrutura da grade (6 horários por dia, 5 dias úteis)
-    const diasSemana = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
+    const diasSemana = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira"];
     const grade = {};
     diasSemana.forEach((dia) => {
         grade[dia] = [];

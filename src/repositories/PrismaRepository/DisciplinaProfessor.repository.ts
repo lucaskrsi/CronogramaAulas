@@ -23,8 +23,8 @@ export class DisciplinaProfessorRepository implements IDisciplinaProfessorReposi
         return disciplinaProfessor;
     }
 
-    async get(id: string): Promise<IDisciplinaProfessor> {
-        const disciplinaProfessorPrisma = await prisma.disciplinaProfessor.findUnique({
+    async get(id: string, canPass: boolean): Promise<IDisciplinaProfessor> {
+        const disciplinaProfessorPrisma = await prisma.disciplinaProfessor.findFirst({
             where: {
                 id: id,
             },
@@ -35,6 +35,9 @@ export class DisciplinaProfessorRepository implements IDisciplinaProfessorReposi
         })
 
         if (!disciplinaProfessorPrisma) {
+            if (canPass) {
+                return null;
+            }
             throw HttpException.NotFoundError("Disciplina x Professor não encontrada");
         }
 
@@ -82,10 +85,11 @@ export class DisciplinaProfessorRepository implements IDisciplinaProfessorReposi
     }
 
     async update(id: string, disciplina?: IDisciplina, professor?: IProfessor): Promise<IDisciplinaProfessor> {
-        let disciplinaProfessorPrisma = await this.get(id);
+        let disciplinaProfessorPrisma = await this.get(id, true);
 
         if (!disciplinaProfessorPrisma) {
-            throw HttpException.NotFoundError("Disciplina x Professor não encontrada");
+            //throw HttpException.NotFoundError("Disciplina x Professor não encontrada");
+            return await this.create(new DisciplinaProfessor(disciplina, professor));
         }
 
         let disciplinaProfessor = await prisma.disciplinaProfessor.update({
@@ -102,7 +106,7 @@ export class DisciplinaProfessorRepository implements IDisciplinaProfessorReposi
     }
 
     async delete(id: string): Promise<string> {
-        let disciplinaProfessorPrisma = await this.get(id);
+        let disciplinaProfessorPrisma = await this.get(id, false);
 
         if (!disciplinaProfessorPrisma) {
             throw HttpException.NotFoundError("Disciplina x Professor não encontrada");
