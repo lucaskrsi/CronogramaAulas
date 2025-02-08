@@ -27,7 +27,7 @@ class DisciplinaRepository {
     }
     get(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const disciplinaPrisma = yield client_1.prisma.disciplina.findUnique({
+            const disciplinaPrisma = yield client_1.prisma.disciplina.findFirst({
                 where: {
                     id: id,
                 },

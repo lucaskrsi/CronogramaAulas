@@ -13,6 +13,7 @@ const GradeCurricular_routes_1 = require("./controllers/GradeCurricular.routes")
 const Professor_routes_1 = require("./controllers/Professor.routes");
 const Turma_routes_1 = require("./controllers/Turma.routes");
 const TurmaGrade_routes_1 = require("./controllers/TurmaGrade.routes");
+const gradeRoutes_1 = require("./controllers/gradeRoutes");
 const router = (0, express_1.Router)();
 exports.router = router;
 (0, Usuario_routes_1.usuarioRoutes)(router);
@@ -26,3 +27,4 @@ exports.router = router;
 (0, Professor_routes_1.professorRoutes)(router);
 (0, Turma_routes_1.turmaRoutes)(router);
 (0, TurmaGrade_routes_1.turmaGradeRoutes)(router);
+(0, gradeRoutes_1.gradeRoutes)(router);

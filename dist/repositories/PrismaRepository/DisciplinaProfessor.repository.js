@@ -28,9 +28,9 @@ class DisciplinaProfessorRepository {
             return disciplinaProfessor;
         });
     }
-    get(id) {
+    get(id, canPass) {
         return __awaiter(this, void 0, void 0, function* () {
-            const disciplinaProfessorPrisma = yield client_1.prisma.disciplinaProfessor.findUnique({
+            const disciplinaProfessorPrisma = yield client_1.prisma.disciplinaProfessor.findFirst({
                 where: {
                     id: id,
                 },
@@ -40,6 +40,9 @@ class DisciplinaProfessorRepository {
                 }
             });
             if (!disciplinaProfessorPrisma) {
+                if (canPass) {
+                    return null;
+                }
                 throw HttpException_1.HttpException.NotFoundError("Disciplina x Professor não encontrada");
             }
             const disciplinaProfessor = new DisciplinaProfessor_1.DisciplinaProfessor(new Disciplina_1.Disciplina(disciplinaProfessorPrisma.disciplina.nome, disciplinaProfessorPrisma.disciplina.id), new Professor_1.Professor(disciplinaProfessorPrisma.professor.cargaHoraria, disciplinaProfessorPrisma.professor.nome, disciplinaProfessorPrisma.professor.matricula, disciplinaProfessorPrisma.professor.id), disciplinaProfessorPrisma.id);
@@ -62,9 +65,10 @@ class DisciplinaProfessorRepository {
     }
     update(id, disciplina, professor) {
         return __awaiter(this, void 0, void 0, function* () {
-            let disciplinaProfessorPrisma = yield this.get(id);
+            let disciplinaProfessorPrisma = yield this.get(id, true);
             if (!disciplinaProfessorPrisma) {
-                throw HttpException_1.HttpException.NotFoundError("Disciplina x Professor não encontrada");
+                //throw HttpException.NotFoundError("Disciplina x Professor não encontrada");
+                return yield this.create(new DisciplinaProfessor_1.DisciplinaProfessor(disciplina, professor));
             }
             let disciplinaProfessor = yield client_1.prisma.disciplinaProfessor.update({
                 where: {
@@ -80,7 +84,7 @@ class DisciplinaProfessorRepository {
     }
     delete(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            let disciplinaProfessorPrisma = yield this.get(id);
+            let disciplinaProfessorPrisma = yield this.get(id, false);
             if (!disciplinaProfessorPrisma) {
                 throw HttpException_1.HttpException.NotFoundError("Disciplina x Professor não encontrada");
             }

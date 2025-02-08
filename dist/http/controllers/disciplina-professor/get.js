@@ -21,7 +21,7 @@ function get(req, res, next) {
             });
             const { id } = createParam.parse(req.params);
             const disciplinaProfessorRepository = (0, makeDisciplinaProfessorRepository_1.makeDisciplinaProfessorRepository)();
-            const disciplinaProfessor = yield disciplinaProfessorRepository.get(id);
+            const disciplinaProfessor = yield disciplinaProfessorRepository.get(id, false);
             res.status(200).json({
                 data: {
                     id: disciplinaProfessor.getId(),

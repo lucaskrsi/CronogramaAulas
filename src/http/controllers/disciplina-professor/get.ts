@@ -11,7 +11,7 @@ export async function get(req: Request, res: Response, next: NextFunction) {
 
         const { id } = createParam.parse(req.params);
         const disciplinaProfessorRepository = makeDisciplinaProfessorRepository();
-        const disciplinaProfessor = await disciplinaProfessorRepository.get(id);
+        const disciplinaProfessor = await disciplinaProfessorRepository.get(id, false);
         res.status(200).json({
             data: {
                 id: disciplinaProfessor.getId(),

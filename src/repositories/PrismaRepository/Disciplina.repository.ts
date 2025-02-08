@@ -19,7 +19,7 @@ export class DisciplinaRepository implements IDisciplinaRepository {
     }
 
     async get(id: string): Promise<IDisciplina> {
-        const disciplinaPrisma = await prisma.disciplina.findUnique({
+        const disciplinaPrisma = await prisma.disciplina.findFirst({
             where: {
                 id: id,
             },
